@@ -32,7 +32,7 @@ final List<Project> projects = [
     parts: ["To Do List", "Completed Task", "Uncompleted Task", "Details Task"],
     availablePlatforms: ["Android", "iOS"],
     assetImage: [
-      "projects/others/to_do.gif",
+      "assets/projects/others/to_do.gif",
     ],
     desc: "To Do App is a personal management app for to do list",
     tags: ["Flutter", "Dart", "SQL", "Riverpod"],
@@ -46,7 +46,7 @@ final List<Project> projects = [
     parts: ["To Do List", "Completed Task", "Uncompleted Task", "Details Task"],
     availablePlatforms: ["Android", "iOS"],
     assetImage: [
-      "projects/others/weather.png",
+      "assets/projects/others/weather.png",
     ],
     desc: "Weather App for checking weather condition",
     tags: ["Flutter", "Dart", "API", "Riverpod"],
@@ -90,8 +90,8 @@ final List<Project> projects = [
     parts: ["To Do List", "Completed Task", "Uncompleted Task", "Details Task"],
     availablePlatforms: ["Android", "iOS"],
     assetImage: [
-      "projects/others/mri/mri.jpg",
-      "projects/others/mri/canvas.jpg",
+      "assets/projects/others/mri/mri.jpg",
+      "assets/projects/others/mri/canvas.jpg",
     ],
     tags: [
       "Flutter",
