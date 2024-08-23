@@ -8,6 +8,7 @@ class Project {
   final String desc;
   final List<String> tags;
   final List<String> tools;
+  final List<String>? toolsCover;
   final List<String> links;
 
   Project({
@@ -21,6 +22,7 @@ class Project {
     required this.tags,
     required this.tools,
     required this.links,
+    this.toolsCover,
   });
 }
 
@@ -38,6 +40,7 @@ final List<Project> projects = [
     tags: ["Flutter", "Dart", "SQL", "Riverpod"],
     tools: ["Flutter", "Dart", "SQLite"],
     links: ["https://github.com/Fegartyx/to_do_list_riverpod"],
+    toolsCover: ["assets/images/flutter.png"],
   ),
   Project(
     id: 2,
@@ -51,6 +54,7 @@ final List<Project> projects = [
     desc: "Weather App for checking weather condition",
     tags: ["Flutter", "Dart", "API", "Riverpod"],
     tools: ["Flutter", "Dart"],
+    toolsCover: ["assets/images/flutter.png"],
     links: ["https://github.com/Fegartyx/weather_app"],
   ),
   Project(
@@ -63,6 +67,7 @@ final List<Project> projects = [
     availablePlatforms: ["Android", "iOS"],
     tags: ["Flutter", "Dart", "SQL", "Provider"],
     tools: ["Flutter", "Dart", "SQLite"],
+    toolsCover: ["assets/images/flutter.png"],
     links: [
       "https://play.google.com/store/apps/details?id=com.merchant.dna&pcampaignid=web_share"
     ],
@@ -77,6 +82,7 @@ final List<Project> projects = [
     availablePlatforms: ["Android", "iOS"],
     tags: ["Flutter", "Dart", "SQL", "Provider"],
     tools: ["Flutter", "Dart", "SQLite"],
+    toolsCover: ["assets/images/flutter.png"],
     links: [
       "https://play.google.com/store/apps/details?id=com.app.dna&pcampaignid=web_share"
     ],
@@ -89,6 +95,7 @@ final List<Project> projects = [
         "Kada is platform for connecting customer and business in single mobile application",
     parts: ["To Do List", "Completed Task", "Uncompleted Task", "Details Task"],
     availablePlatforms: ["Android", "iOS"],
+    toolsCover: ["assets/images/flutter.png"],
     assetImage: [
       "assets/projects/others/mri/mri.jpg",
       "assets/projects/others/mri/canvas.jpg",

@@ -3,11 +3,19 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import 'package:portofolio/model/project.dart';
 import 'package:portofolio/presentations/project_details.dart';
+import 'package:portofolio/presentations/widgets/image_cover_profile.dart';
 import 'package:portofolio/presentations/widgets/profile_icon_url.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _gridCount = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,15 +27,22 @@ class HomePage extends StatelessWidget {
           size: 40,
         ),
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
+        controller: _scrollController,
         child: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: 80, vertical: kToolbarHeight),
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.sizeOf(context).width <= 850 ? 20 : 80,
+              vertical: kToolbarHeight),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FirstPage(),
-              SecondPage(),
+              FirstPage(
+                gridCount: _gridCount,
+                scrollController: _scrollController,
+              ),
+              SecondPage(
+                gridCount: _gridCount,
+              ),
             ],
           ),
         ),
@@ -37,7 +52,10 @@ class HomePage extends StatelessWidget {
 }
 
 class FirstPage extends StatelessWidget {
-  const FirstPage({super.key});
+  final ScrollController scrollController;
+  final GlobalKey gridCount;
+  const FirstPage(
+      {super.key, required this.scrollController, required this.gridCount});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +74,7 @@ class FirstPage extends StatelessWidget {
             height: 5,
           ),
           Text(
-            "Mobile App Developer",
+            "Developer",
             style: TextStyle(
                 fontSize: MediaQuery.sizeOf(context).width <= 600 ? 25 : 40),
           ),
@@ -64,18 +82,23 @@ class FirstPage extends StatelessWidget {
             height: 15,
           ),
           SizedBox(
-            width: MediaQuery.sizeOf(context).width / 1.5,
+            width: MediaQuery.sizeOf(context).width / 0.5,
             child: Wrap(
               children: [
-                Image.asset(
-                  "assets/images/flutter.png",
-                  width: MediaQuery.sizeOf(context).width <= 600 ? 100 : 260,
+                ImageCover(
+                  asset: "assets/images/flutter.png",
                   filterQuality: FilterQuality.low,
+                  width: MediaQuery.sizeOf(context).width <= 600 ? 100 : 200,
                 ),
-                Image.asset(
-                  "assets/images/cpp.png",
-                  width: MediaQuery.sizeOf(context).width <= 600 ? 100 : 260,
+                ImageCover(
+                  asset: "assets/images/cpp.png",
                   filterQuality: FilterQuality.low,
+                  width: MediaQuery.sizeOf(context).width <= 600 ? 100 : 200,
+                ),
+                ImageCover(
+                  asset: "assets/images/laravel.png",
+                  filterQuality: FilterQuality.low,
+                  width: MediaQuery.sizeOf(context).width <= 600 ? 100 : 200,
                 ),
               ],
             ),
@@ -86,7 +109,17 @@ class FirstPage extends StatelessWidget {
           MouseRegion(
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                final RenderBox renderBox =
+                    gridCount.currentContext?.findRenderObject() as RenderBox;
+                final offset =
+                    renderBox.localToGlobal(Offset.zero, ancestor: null).dy;
+                scrollController.animateTo(
+                  offset,
+                  duration: const Duration(seconds: 1),
+                  curve: Curves.easeInOut,
+                );
+              },
               child: Container(
                 padding: EdgeInsets.symmetric(
                     horizontal:
@@ -156,11 +189,13 @@ class FirstPage extends StatelessWidget {
 }
 
 class SecondPage extends StatelessWidget {
-  const SecondPage({super.key});
+  final GlobalKey gridCount;
+  const SecondPage({super.key, required this.gridCount});
 
   @override
   Widget build(BuildContext context) {
     return StaggeredGrid.count(
+      key: gridCount,
       crossAxisCount: MediaQuery.sizeOf(context).width <= 750 ? 1 : 3,
       children: projects.map(
         (data) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portofolio/model/project.dart';
+import 'package:portofolio/presentations/widgets/image_cover_profile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void openInNewWindow(String uri, String name) async {
@@ -43,10 +44,14 @@ class ProjectDetails extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 100),
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.sizeOf(context).width <= 850 ? 30 : 100),
           child: Column(
             children: [
               ImageWidget(project: project),
+              const SizedBox(
+                height: 30,
+              ),
               ContextProject(project: project),
             ],
           ),
@@ -65,18 +70,34 @@ class ImageWidget extends StatelessWidget {
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Stack(
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Hero(
-            tag: project.name,
-            child: Image.asset(
-              project.assetPreviewImage!,
-              width: 150,
-              opacity: const AlwaysStoppedAnimation(0.3),
+          Align(
+            alignment: Alignment.center,
+            child: Hero(
+              tag: project.name,
+              child: Image.asset(
+                project.assetPreviewImage!,
+                width: 150,
+                opacity: const AlwaysStoppedAnimation(0.3),
+              ),
             ),
           ),
+          if (project.toolsCover != null) ...[
+            ...project.toolsCover!.map(
+              (e) => Align(
+                alignment: Alignment.topLeft,
+                child: ImageCover(
+                  asset: e,
+                  filterQuality: FilterQuality.low,
+                  width: MediaQuery.sizeOf(context).width <= 600 ? 50 : 150,
+                  opacity: const AlwaysStoppedAnimation(0.3),
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -103,7 +124,7 @@ class ContextProject extends StatelessWidget {
                     const Text(
                       "Project Overview",
                       style:
-                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
                       height: 15,
@@ -180,36 +201,36 @@ class ContextProject extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Project Overview",
-                    style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    project.desc,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Project Overview",
+                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  project.desc,
+                  style: const TextStyle(fontSize: 16),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  "It has ${project.parts.length} features : ",
+                  style: const TextStyle(fontSize: 16),
+                ),
+                ...project.parts.map(
+                  (e) => Text(
+                    "- $e",
                     style: const TextStyle(fontSize: 16),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
                   ),
-                  Text(
-                    "It has ${project.parts.length} features : ",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  ...project.parts.map(
-                    (e) => Text(
-                      "- $e",
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
             const Spacer(),
             Expanded(
