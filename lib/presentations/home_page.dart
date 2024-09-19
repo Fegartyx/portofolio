@@ -229,11 +229,13 @@ class SecondPage extends StatelessWidget {
                         // top: 90,
                         child: Hero(
                           tag: data.name,
-                          child: Image.asset(
-                            data.assetPreviewImage!,
-                            width: 70,
-                            opacity: const AlwaysStoppedAnimation(0.5),
-                          ),
+                          child: data.assetPreviewImage != null
+                              ? Image.asset(
+                                  data.assetPreviewImage!,
+                                  width: 70,
+                                  opacity: const AlwaysStoppedAnimation(0.5),
+                                )
+                              : const SizedBox(),
                         ),
                       ),
                       Column(

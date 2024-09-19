@@ -232,24 +232,24 @@ class ContextProject extends StatelessWidget {
                 ),
               ],
             ),
-            const Spacer(),
-            Expanded(
-              child: SizedBox(
-                height: 450,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: Image.asset(
-                      project.assetImage![index],
-                      filterQuality: FilterQuality.high,
-                    ),
-                  ),
-                  itemCount: project.assetImage?.length ?? 0,
-                ),
-              ),
-            )
           ],
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        SizedBox(
+          height: 300,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) => Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Image.asset(
+                project.assetImage![index],
+                filterQuality: FilterQuality.high,
+              ),
+            ),
+            itemCount: project.assetImage?.length ?? 0,
+          ),
         ),
         const SizedBox(
           height: 30,
